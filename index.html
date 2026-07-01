@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Roadmap Tracker</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+
+        <div class="logo">
+            🚀 Career Roadmap Tracker
+        </div>
+
+        <button id="themeToggle" aria-label="Toggle Dark Mode">
+            🌌
+        </button>
+
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <h1>Plan Your Learning Journey</h1>
+
+        <p>
+            Organize your goals, track your progress,
+            and achieve your dream career.
+        </p>
+
+    </section>
+
+    <!-- Dashboard -->
+    <section class="dashboard">
+
+        <div class="card">
+            <h3>Total Goals</h3>
+            <span id="totalGoals">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Completed</h3>
+            <span id="completedGoals">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Pending</h3>
+            <span id="pendingGoals">0</span>
+        </div>
+
+        <div class="card">
+            <h3>Overall Progress</h3>
+            <span id="overallProgress">0%</span>
+        </div>
+        <div class="card">
+            <h3>🔥 Streak</h3>
+            <span id="streak">0 Days</span>
+        </div>
+
+    </section>
+
+    <!-- Controls -->
+    <section class="controls">
+
+        <input type="text" id="search" placeholder="🔍 Search Goal">
+
+        <button id="addGoalBtn">
+            + Add Goal
+        </button>
+
+    </section>
+
+    <!-- Goal List -->
+    <section id="goalContainer">
+        <div class="goal-card">
+
+            <h2>📚 Learn Svelte</h2>
+
+            <p>
+                Complete the Svelte tutorial and build one mini project.
+            </p>
+
+            <p>
+                <strong>Status:</strong> Pending
+            </p>
+
+            <div class="goal-actions">
+
+                <button class="complete-btn">
+                    ✅ Complete
+                </button>
+
+                <button class="edit-btn">
+                    ✏️ Edit
+                </button>
+
+                <button class="delete-btn">
+                    🗑 Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="roadmap">
+
+        <h2>Your Career Roadmap</h2>
+
+        <div class="mermaid" id="roadmapChart">
+
+        </div>
+
+    </section>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

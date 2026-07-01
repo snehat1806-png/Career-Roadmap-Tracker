@@ -1,0 +1,291 @@
+/* Google Font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Color Variables */
+:root{
+    --primary:#2563EB;
+    --secondary:#3B82F6;
+    --success:#22C55E;
+    --danger:#EF4444;
+    --warning:#F59E0B;
+
+    --background:#F8FAFC;
+    --card:#FFFFFF;
+
+    --text:#1E293B;
+    --light-text:#64748B;
+
+    --shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* Body */
+
+body{
+
+    font-family:'Poppins',sans-serif;
+    background:var(--background);
+    color:var(--text);
+
+}
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+
+    text-align:center;
+
+    padding:70px 20px;
+
+}
+.hero h1{
+    
+    font-size:3rem;
+    
+    color:var(--primary);
+    
+    margin-bottom:15px;
+    
+    }
+.hero p{
+
+    max-width:650px;
+
+    margin:auto;
+
+    color:var(--light-text);
+
+    font-size:1.1rem;
+
+    line-height:1.8;
+
+}
+/* ==========================
+   DASHBOARD
+========================== */
+
+.dashboard{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+
+    gap:20px;
+
+    padding:20px 60px;
+}
+
+.card{
+
+    background:var(--card);
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:var(--shadow);
+
+    text-align:center;
+
+    transition:0.3s ease;
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.card h3{
+
+    color:var(--light-text);
+
+    margin-bottom:15px;
+
+}
+
+.card span{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:var(--primary);
+
+}
+/* ==========================
+   CONTROLS
+========================== */
+
+.controls{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px 60px;
+
+    gap:20px;
+
+}
+
+#search{
+
+    flex:1;
+
+    padding:14px 18px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--card);
+
+    box-shadow:var(--shadow);
+
+    font-size:1rem;
+
+    outline:none;
+
+}
+
+#search:focus{
+
+    border:2px solid var(--primary);
+
+}
+
+#addGoalBtn{
+
+    padding:14px 24px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-size:1rem;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+
+}
+
+#addGoalBtn:hover{
+
+    transform:translateY(-3px);
+
+}
+/* ==========================
+   GOAL CARD
+========================== */
+
+#goalContainer{
+
+    padding:30px 60px;
+
+}
+
+.goal-card{
+
+    background:var(--card);
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:20px;
+
+}
+
+.goal-card h2{
+
+    color:var(--primary);
+
+    margin-bottom:10px;
+
+}
+
+.goal-card p{
+
+    margin-bottom:12px;
+
+    color:var(--light-text);
+
+}
+
+.goal-actions{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:15px;
+
+}
+
+.goal-actions button{
+
+    border:none;
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    color:white;
+
+    transition:0.3s ease;
+
+}
+
+.complete-btn{
+
+    background:var(--success);
+
+}
+
+.edit-btn{
+
+    background:var(--warning);
+
+}
+
+.delete-btn{
+
+    background:var(--danger);
+
+}
+
+.goal-actions button:hover{
+
+    transform:translateY(-3px);
+
+}
+/* ==========================
+   DARK MODE
+========================== */
+
+body.dark{
+
+    --background:#0F172A;
+
+    --card:#1E293B;
+
+    --text:#F8FAFC;
+
+    --light-text:#CBD5E1;
+
+}
