@@ -1,6 +1,6 @@
-// ===============================
-// DOM Elements
-// ===============================
+// ======================
+// Get HTML Elements
+// ======================
 
 const addGoalBtn = document.getElementById("addGoalBtn");
 const goalContainer = document.getElementById("goalContainer");
@@ -10,221 +10,149 @@ const totalGoals = document.getElementById("totalGoals");
 const completedGoals = document.getElementById("completedGoals");
 const pendingGoals = document.getElementById("pendingGoals");
 const overallProgress = document.getElementById("overallProgress");
-const themeToggle = document.getElementById("themeToggle");
 
-// ===============================
-// Array + Local Storage
-// ===============================
+// ======================
+// Add Goal
+// ======================
 
-let goals = JSON.parse(localStorage.getItem("goals")) || [];
+addGoalBtn.addEventListener("click", function () {
 
-// ===============================
-// Save Goals
-// ===============================
+    const goalName = searchInput.value.trim();
 
-function saveGoals() {
-    localStorage.setItem("goals", JSON.stringify(goals));
-}
-
-// ===============================
-// Dashboard
-// ===============================
-
-function updateDashboard() {
-
-    totalGoals.textContent = goals.length;
-
-    const completed = goals.filter(goal => goal.completed).length;
-
-    completedGoals.textContent = completed;
-
-    pendingGoals.textContent = goals.length - completed;
-
-    let progress = 0;
-
-    if (goals.length > 0) {
-        progress = Math.round((completed / goals.length) * 100);
+    if (goalName === "") {
+        alert("Please enter a goal!");
+        return;
     }
 
-    overallProgress.textContent = progress + "%";
-}
+    // Create Card
+    const card = document.createElement("div");
+    card.classList.add("goal-card");
 
-// ===============================
-// Display Goals
-// ===============================
+    card.innerHTML = `
+        <h3>${goalName}</h3>
 
-function displayGoals(searchText = "") {
+        <p class="status">Status : Pending</p>
 
-    goalContainer.innerHTML = "";
+        <div class="btn-group">
 
-    const filteredGoals = goals.filter(goal =>
-        goal.title.toLowerCase().includes(searchText.toLowerCase())
-    );
+            <button class="complete-btn">
+                ✔ Complete
+            </button>
 
-    filteredGoals.forEach((goal, index) => {
+            <button class="delete-btn">
+                🗑 Delete
+            </button>
 
-        const card = document.createElement("div");
+        </div>
+    `;
 
-        card.className = "card";
+    // Get Elements Inside Card
+    const completeBtn = card.querySelector(".complete-btn");
+    const deleteBtn = card.querySelector(".delete-btn");
+    const status = card.querySelector(".status");
 
-        card.innerHTML = `
+    // ======================
+    // Complete Button
+    // ======================
 
-    <h2>${goal.title}</h2>
+    completeBtn.addEventListener("click", function () {
 
-    <p>${goal.description}</p>
+        if (status.textContent === "Status : Pending") {
 
-    <p><strong>Status:</strong>
-    ${goal.completed ? "✅ Completed" : "⏳ Pending"}
-    </p>
+            status.textContent = "Status : Completed ✅";
 
-    <button class="completeBtn">
-        ${goal.completed ? "Undo" : "Complete"}
-    </button>
+        } else {
 
-    <button class="editBtn">
-        Edit
-    </button>
+            status.textContent = "Status : Pending";
 
-    <button class="deleteBtn">
-        Delete
-    </button>
+        }
 
-`;
-        // Complete Button
-
-        card.querySelector(".completeBtn").addEventListener("click", () => {
-
-            goal.completed = !goal.completed;
-
-            saveGoals();
-
-            displayGoals(searchInput.value);
-            generateRoadmap();
-            updateDashboard();
-
-        });
-        // Edit Button
-
-        card.querySelector(".editBtn").addEventListener("click", () => {
-
-            const newTitle = prompt("Edit Goal Title", goal.title);
-
-            if (!newTitle) return;
-
-            const newDescription = prompt(
-                "Edit Goal Description",
-                goal.description
-            );
-
-            goal.title = newTitle;
-            goal.description = newDescription;
-
-            saveGoals();
-
-            displayGoals(searchInput.value);
-            generateRoadmap();
-            updateDashboard();
-
-        });
-
-        // Delete Button
-
-        card.querySelector(".deleteBtn").addEventListener("click", () => {
-
-            goals.splice(index, 1);
-
-            saveGoals();
-
-            displayGoals(searchInput.value);
-            generateRoadmap();
-            updateDashboard();
-
-        });
-
-        goalContainer.appendChild(card);
+        updateDashboard();
 
     });
 
-}
-const streak = document.getElementById("streak");
+    // ======================
+    // Delete Button
+    // ======================
 
-streak.textContent = goals.length + " Goals";
+    deleteBtn.addEventListener("click", function () {
 
-// ===============================
-// Add Goal
-// ===============================
+        card.remove();
 
-addGoalBtn.addEventListener("click", () => {
-
-    const title = prompt("Enter Goal Title");
-
-    if (!title) return;
-
-    const description = prompt("Enter Goal Description");
-
-    goals.push({
-
-        title,
-
-        description,
-
-        completed: false
+        updateDashboard();
 
     });
 
-    saveGoals();
+    // Add Card to Page
+    goalContainer.appendChild(card);
 
-    displayGoals();  
-    generateRoadmap();
+    // Clear Input
+    searchInput.value = "";
+
+    // Update Dashboard
     updateDashboard();
 
 });
 
-// ===============================
-// Search
-// ===============================
+// ======================
+// Dashboard Function
+// ======================
 
-searchInput.addEventListener("input", () => {
+function updateDashboard() {
 
-    displayGoals(searchInput.value);
+    const cards = document.querySelectorAll(".goal-card");
+    const completed = document.querySelectorAll(".goal-card .status");
 
-});
-//================================
-//Generate Roadmao 
-//================================
-function generateRoadmap() {
+    let completedCount = 0;
 
-    let graph = "graph TD\n";
+    completed.forEach(function (item) {
 
-    goals.forEach((goal, index) => {
+        if (item.textContent === "Status : Completed ✅") {
 
-        if (index === 0) {
-
-            graph += `A["${goal.title}"]`;
-
-        } else {
-
-            graph += ` --> N${index}["${goal.title}"]`;
+            completedCount++;
 
         }
 
     });
 
-    document.getElementById("roadmapChart").textContent = graph;
+    const total = cards.length;
+    const pending = total - completedCount;
 
-    mermaid.run();
+    totalGoals.textContent = total;
+    completedGoals.textContent = completedCount;
+    pendingGoals.textContent = pending;
+
+    if (total === 0) {
+
+        overallProgress.textContent = "0%";
+
+    } else {
+
+        const progress = Math.round((completedCount / total) * 100);
+        overallProgress.textContent = progress + "%";
+
+    }
 
 }
-// ===============================
-// Load Data
-// ===============================
+//Search input 
+searchInput.addEventListener("input", function () {
+const searchText = searchInput.value.toLowerCase();
 
-displayGoals();
-generateRoadmap();
-updateDashboard();
+const cards = document.querySelectorAll(".goal-card");
 
-themeToggle.addEventListener("click", () => {
+cards.forEach(function(card){
 
-    document.body.classList.toggle("dark");
+    const goalTitle = card.querySelector("h3").textContent.toLowerCase();
 
+    if(goalTitle.includes(searchText)){
+
+        card.style.display = "block";
+
+    }else{
+
+        card.style.display = "none";
+
+    }
+
+});
 });
